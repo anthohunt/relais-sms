@@ -1,0 +1,13 @@
+# Lancer : cp .env.example .env  (puis mettre un vrai jeton)  &&  docker compose up -d
+# Le service ecoute sur 127.0.0.1:8000 ; mettez un reverse proxy HTTPS devant (Caddy, Traefik, nginx).
+services:
+  sms-relay:
+    build: .
+    container_name: sms-relay
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/data
+    environment:
+      - SMS_RELAY_TOKEN=${SMS_RELAY_TOKEN:?definir SMS_RELAY_TOKEN dans .env}
